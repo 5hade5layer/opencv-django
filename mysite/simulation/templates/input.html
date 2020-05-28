@@ -5,12 +5,10 @@
 
 </head>
 <body>
-<h1>Uplode the *image to be analyised</h1>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Analyse</button>
-  <p>*(the image must be of .jpeg format)</p>
-</form>
+    <a href="{% url 'result' %}"> 
+        <button> 
+            Analyse! 
+        </button> 
+    </a>
 </body>
 </html>
