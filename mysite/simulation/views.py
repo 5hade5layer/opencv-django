@@ -8,5 +8,9 @@ def home(request):
 
 def result(request):
     heat()
-    return render(request, 'output.html')
+    f = open(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\data.txt","r")
+    ID=f.readline()
+    age=f.readline()
+    f.close()
+    return render(request, 'output.html',{'id': ID,'age':age})
     
