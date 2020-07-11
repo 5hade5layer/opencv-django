@@ -31,17 +31,19 @@ def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
 
    	# return the resized image
 	return resized
-def heat():
+def heat(hi,li,temp):
     # load the image
-    img = cv2.imread(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\input.jpeg")
-    img=image_resize(img,600,1000)
-    cv2.imwrite(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\input.jpeg",img)
-    out=img.copy()
-    imgg=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    ret,th = cv2.threshold(imgg,230,255,cv2.THRESH_BINARY)
-    contours, hierarchy = cv2.findContours(th,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
-    for i in contours:
-        if(cv2.contourArea(i,True)<-100):
-            x,y,w,h = cv2.boundingRect(i)
-            cv2.rectangle(out,(x,y),(x+w,y+h),(0,0,0),int(img.shape[0]*0.007))
-    cv2.imwrite(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\output.jpeg",out)
+	r=hi-li
+	gray=int(float(((temp-li)/r))*255)
+	img = cv2.imread(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\input.jpeg")
+	img=image_resize(img,600,1000)
+	cv2.imwrite(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\input.jpeg",img)
+	out=img.copy()
+	imgg=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	ret,th = cv2.threshold(imgg,gray,255,cv2.THRESH_BINARY)
+	contours, hierarchy = cv2.findContours(th,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+	for i in contours:
+		if(cv2.contourArea(i,True)<-100):
+			x,y,w,h = cv2.boundingRect(i)
+			cv2.rectangle(out,(x,y),(x+w,y+h),(0,0,0),int(img.shape[0]*0.007))
+	cv2.imwrite(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\output.jpeg",out)
