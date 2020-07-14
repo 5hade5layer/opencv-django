@@ -1,11 +1,24 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .heat import heat
+from django.views.generic import ListView, CreateView 
+from django.urls import reverse_lazy 
 from .forms import *
+from .models import Simulation
+from .heat import heat
+import os 
+from os import path
 
-def home(request): 
-    f = open(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\data.txt","r")
+class home(CreateView): 
+    model = Simulation
+    form_class = SimulationForm
+    template_name = 'input.html'
+    success_url = reverse_lazy('result')
+
+def result(request): 
+    basepath = os.getcwd()
+    inputPath = "\\".join([basepath,"simulation\static\data.txt"])
+    f = open(inputPath,"r")
     ID=f.readline()
     age=f.readline()
     f.close()
@@ -16,6 +29,6 @@ def home(request):
             hi=tval.cleaned_data['hi']
             temp=tval.cleaned_data['temp']
             heat(hi,li,temp)
-            return render(request, 'input.html',{'forms':thresh(),'id': ID,'age':age,'out':True})
-    return render(request, 'input.html',{'forms':thresh(),'id': ID,'age':age,'out':False})
+            return render(request, 'output.html',{'forms':thresh(),'id': ID,'age':age,'out':True,'temp':temp})
+    return render(request, 'output.html',{'forms':thresh(),'id': ID,'age':age,'out':False})
 

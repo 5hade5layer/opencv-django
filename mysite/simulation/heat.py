@@ -1,6 +1,9 @@
 # import the necessary packages
 import numpy as np
 import cv2
+import os 
+from os import path
+
 def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
 	# initialize the dimensions of the image to be resized and
 	# grab the image size
@@ -32,12 +35,14 @@ def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
    	# return the resized image
 	return resized
 def heat(hi,li,temp):
-    # load the image
+	# load the image
+	basepath = os.getcwd()
 	r=hi-li
 	gray=int(float(((temp-li)/r))*255)
-	img = cv2.imread(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\input.jpeg")
-	img=image_resize(img,600,1000)
-	cv2.imwrite(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\input.jpeg",img)
+	print("".join([basepath,"\simulation\static\images\input.jpeg"]))
+	img = cv2.imread("".join([basepath,"\simulation\static\images\input.jpeg"]))
+	imgre=image_resize(img,600,1000)
+	cv2.imwrite("".join([basepath,"\simulation\static\images\input.jpeg"]),imgre)
 	out=img.copy()
 	imgg=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	ret,th = cv2.threshold(imgg,gray,255,cv2.THRESH_BINARY)
@@ -46,4 +51,4 @@ def heat(hi,li,temp):
 		if(cv2.contourArea(i,True)<-100):
 			x,y,w,h = cv2.boundingRect(i)
 			cv2.rectangle(out,(x,y),(x+w,y+h),(0,0,0),int(img.shape[0]*0.007))
-	cv2.imwrite(r"C:\Users\bharathambika\Desktop\opencv-django\mysite\simulation\static\images\output.jpeg",out)
+	cv2.imwrite("".join([basepath,"\simulation\static\images\output.jpeg"]),image_resize(out,600,1000))

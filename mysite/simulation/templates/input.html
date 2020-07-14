@@ -5,19 +5,12 @@
 
 </head>
 <body>
-<h1>Hot Spot Marker</h1>
-<form action="{% url 'home' %}" method='POST'>
-    {% csrf_token %}
-    {{forms}}
-    <input type="submit" name="analyse" value="analyse">
+<h1>Uplode the *image to be analyised</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Analyse</button>
+  <p>*(the image must be of .jpeg format)</p>
 </form>
-<ul>
-    <img src="{% static 'images/input.jpeg' %}" alt="input">
-    {% if out %}
-    <img src="{% static 'images/output.jpeg' %}" alt="output">
-    {% endif %}
-</ul>
-<p>ID:   {{ id }}</p>
-<p>Age:  {{ age }}</p>
 </body>
 </html>
