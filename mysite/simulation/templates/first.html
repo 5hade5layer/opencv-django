@@ -6,21 +6,15 @@
 </head>
 <body>
 <h1>Hot Spot Marker</h1>
-<form action="{% url 'result' %}" method='POST'>
+<form action="{% url 'trange' %}" method='POST'>
     {% csrf_token %}
     {{forms}}
     <input type="submit" name="analyse" value="analyse">
 </form>
 <ul>
     <img src="{% static 'images/input.jpeg' %}" alt="input">
-    {% if out %}
-    <img src="{% static 'images/output.jpeg' %}" alt="output">
-    {% endif %}
 </ul>
 <h3>ID:   {{ id }} Age:  {{ age }}</h3>
-{% if out %}
-<h3>Threshold temp: {{temp}}</h3>
-{% endif %}
 <a href="{% url 'home' %}">
    <button>select another image</button>
 </a>
